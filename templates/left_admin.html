@@ -1,0 +1,54 @@
+{% load utils %}
+
+
+<li>
+    <a href="javascript:;">
+        <i class="iconfont left-nav-li" lay-tips="Account management">&#xe6a7;</i>
+        <cite>Account Management</cite>
+        <i class="iconfont nav_right">&#xe697;</i>
+    </a>
+    <ul class="sub-menu">
+        <li>
+            <a onclick="xadmin.add_tab('Admin account management','/admins/admin/list/')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>Admin Account Management</cite>
+            </a>
+        </li>
+        <li>
+            <a onclick="xadmin.add_tab('Admin account to add','/admins/admin/add/')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>New Admin Account</cite>
+            </a>
+        </li>
+        <li>
+            <a onclick="xadmin.add_tab('Registered users to manage','/users/admin/list/')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>Edit Registered Users</cite>
+            </a>
+        </li>
+        <li>
+            <a onclick="xadmin.add_tab('Password change','/common/mod/')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>Change My Password</cite>
+            </a>
+        </li>
+    </ul>
+</li>
+<li>
+
+        <li>
+            <a onclick="xadmin.add_tab('Comments on the management','/issues/admin/list/')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>Comments Management</cite>
+            </a>
+        </li>
+        <li>
+            <a onclick="xadmin.add_tab('Collection management','/collection/admin/list/')">
+                <i class="iconfont">&#xe6a7;</i>
+                <cite>Collection Management</cite>
+            </a>
+        </li>
+
+</li>
+
+    

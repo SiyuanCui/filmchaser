@@ -1,0 +1,91 @@
+{% load utils %} {% include "head.html" %} {% include "header.html" %}
+
+<script src="/static/js/datepicker/WdatePicker.js"></script>
+
+<div>
+    <div class="container" style="margin-bottom: 20px;background-color: #fff">
+        <div class="v2-case clearfix">
+            <div>
+                <form action="?" class="search">
+                    <table class="jd-search">
+                        <tbody>
+                        <tr>
+                            <td class="label1">Title/Genre</td>
+                            <td class="form-inline">
+                                Title<input type="text" class="form-control" style="width: 150px" name="title"
+                                            value="{{ request.GET.title }}"/>
+
+                                Genre<input type="text" class="form-control" name="tags"
+                                            value="{{ request.GET.tags }}"/>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label1">Director/Actor</td>
+                            <td class="form-inline">
+                                Director <input type="text" class="form-control" style="width: 150px" name="director"
+                                                value="{{ request.GET.director }}"/>Actor
+                                <input type="text"
+                                       class="form-control"
+                                       name="actor"
+                                       value="{{ request.GET.actor }}"/>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="label1">The sorting</td>
+                            <td class="form-inline">
+
+                                <select class="form-control" name="order" id="orderby">
+                                    <option value="id">According to the published time</option>
+                                    <option value="collection_count">According to the collection</option>
+                                    <option value="visit_count">According to the traffic</option>
+                                    <option value="issues_count">According to the comments</option>
+                                    <option value="score">According to the score</option>
+                                    <option value="addtime">According to add time</option>
+                                </select>
+                                <select class="form-control" name="sort" id="sort">
+                                    <option value="desc">Reverse order</option>
+                                    <option value="asc">Ascending order</option>
+                                </select>
+                                <script>
+                                    $("#orderby").val("{{ orderby }}");
+                                    $("#sort").val("{{ sort }}");
+                                </script>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="row v2-list">
+                {% for r in list %}
+                    <div class="col-md-3 v2-list-col">
+                        <a href="/movies/detail/?id={{ r.id }}" class="v2-case__box__img">
+                            <div class="img-box pb120">
+                                <div href="javascript:;" class="img"
+                                     style="background-image: url('{{ r.pic }}')"></div>
+                            </div>
+                        </a>
+                        <a href="/movies/detail/?id={{ r.id }}" class="v2-case__h2">
+                            <h3>
+                                {{ r.title }}
+                                <i></i>
+                            </h3>
+                            <h4>Score:{{ r.score }}</h4>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% include "page.html" %}
+        </div>
+
+
+    </div>
+</div>
+
+{% include "footer.html" %}
+{% include "foot.html" %}

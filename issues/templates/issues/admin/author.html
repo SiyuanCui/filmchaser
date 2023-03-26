@@ -1,0 +1,73 @@
+{% load utils %} {% include "head.html" %}
+
+<div style="padding: 10px" class="admin-content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="module-name">Comments</span>
+            <span>List</span>
+        </div>
+        <div class="panel-body">
+            <div class="pa10 bg-warning">
+                <form class="form-inline" id="formSearch" action="?">
+
+                    <div class="form-group">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </div>
+                    <select class="form-control" name="order" id="orderby">
+                        <option value="id"> By release time</option>
+                    </select>
+                    <select class="form-control" name="sort" id="sort">
+                        <option value="desc"> Reverse order</option>
+                        <option value="asc"> Ascending order</option>
+                    </select>
+                    <script>
+                        $("#orderby").val("{{ orderby }}");
+                        $("#sort").val("{{ sort }}");
+                    </script>
+                    <button type="submit" class="btn btn-default">search</button>
+
+                </form>
+            </div>
+
+            <div class="list-table">
+                <table width="100%" border="1" class="table table-list table-bordered table-hover">
+                    <thead>
+                    <tr align="center">
+                        <th width="60" data-field="item"> No.</th>
+                        <th> Movie Name</th>
+                        <th> My Score</th>
+                        <th> Comment</th>
+                        <th> Commentator</th>
+                        <th> Time</th>
+                        <th width="220" data-field="handler"> Operation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for map in list %} {% with i=forloop.counter %}
+                        <tr id="{{ map.id }}" pid="">
+                            <td width="30" align="center">
+                                <label> {{ i }} </label>
+                            </td>
+                            <td>{{ map.title }}</td>
+                            <td>{{ map.score }}</td>
+                            <td>{{ map.content }}</td>
+                            <td>{{ map.author }}</td>
+                            <td>{{ map.addtime }}</td>
+                            <td align="center">
+                                <a target="_blank" href="/movies/detail/?id={{ map.tableid }}">Details</a>
+
+
+                                <a href="/issues/delete/?id={{ map.id }}"
+                                   onclick="return confirm('Are you sure you want to delete？')"> Delete </a>
+                            </td>
+                        </tr>
+                    {% endwith %}{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% include "page.html" %}
+        </div>
+    </div>
+</div>
+{% include "foot.html" %}

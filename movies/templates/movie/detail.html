@@ -1,0 +1,142 @@
+{% load utils %}
+
+{% include "head.html" %}
+{% include "header.html" %}
+
+<div class="container" style="background-color: #fff">
+    <div class="row">
+        <div class="col-md-6" style="height:600px">
+            <img class="img-fluid img-rounded mx-auto" style="margin-top:5%; margin-left:5%;width: 90%;height: auto"
+                 src="{{ map.pic }}">
+        </div>
+        <div class="col-md-6">
+            <label class="text-wrap"
+                   style="font-size: x-large;padding-top:5%;padding-bottom:5% ">{{ map.title }}</label>
+            <h4 STYLE="color: sandybrown;font-size: x-large;text-align: end;margin-right: 10%">
+                Score: {{ map.score }}</h4>
+            {% if request.session.username != None and "" !=  request.session.username %}
+
+                {% sql "SELECT count(*) count FROM collection WHERE table='movies' AND movie_id='%s' AND username='%s'" "find" map.id request.session.username as collection_count %}
+
+                {% query 'collection' 'select' 'filter' "title" map.title as collection_result %}
+                {% if collection_result.0.title == map.title %}
+                    <button type="button" class="btn btn-default"
+                            onclick="location.href='../../../collection/insert/?movie_id={{ map.id }}&table=movies&title={{ map.title }}'">
+                        Undo collection
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-primary"
+                            onclick="location.href='../../../collection/insert/?movie_id={{ map.id }}&table=movies&title={{ map.title }}'">
+
+                        Collection
+                    </button>
+                {% endif %}
+            {% else %}
+                <button type="button" class="btn btn-default"
+                        onclick="location.href='../../../collection/insert/?movie_id={{ map.id }}&table=movies&title={{ map.title }}'">
+
+                    Collection
+                </button>
+            {% endif %}
+            <ul style="padding: 10% 10% 5% 0%">
+                <li class="list-group-item"><label>Director:</label> {{ map.director }}</li>
+                <li class="list-group-item"><label>Actor:</label> {{ map.actor }}</li>
+                <li class="list-group-item"><label>Release Year:</label> {{ map.date }}</li>
+                <li class="list-group-item"><label>Time Length:</label> {{ map.time_length }}</li>
+                <li class="list-group-item"><label>Collection:</label> {{ map.collection_count }}</li>
+                <li class="list-group-item"><label>Visit:</label> {{ map.visit_count }}</li>
+                <li class="list-group-item"><label>Comments:</label> {{ map.issues_count }}</li>
+                <li class="list-group-item"><label>Genres:</label> {{ map.tags }}</li>
+            </ul>
+        </div>
+    </div>
+    {#-----------Introduction------------#}
+    <div class="row" style="padding: 5%">
+        <div class="col-md-12">
+            <h1 style="font-size: x-large;color:steelblue">Introduction</h1>
+            {{ map.intro }}
+        </div>
+    </div>
+    {#-----------Review Area------------#}
+    <div class="gr-control-module-table"
+         style="margin:15px 0 15px 0;background-color:#FFFFFF;padding: 5%">
+        <div class="">
+            <h1 style="font-size: x-large;color:steelblue">Reviews</h1>
+            <form action="/issues/insert/" method="post">
+
+                <div class="form-group">
+                    <div class="row">
+
+                        <div class="col-sm-10">
+                            score
+                            <select class="form-control" name="score"
+                                    style="width: 200px;margin-left: 0px">
+
+                                <option value="10">10</option>
+                                <option value="8">8</option>
+                                <option value="6">6</option>
+                                <option value="4">4</option>
+                                <option value="2">2</option>
+                                <option value="0">0</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+
+
+                        <textarea style="width: 80%;height: 120px" class="form-control" name="content"
+                                  placeholder="Please enter some comment..."></textarea>
+
+                </div>
+                <input type="hidden" name="title" value="movie"/>
+                <input name="id" type="hidden" id="id" value="{{ request.GET.id }}"/>
+                <input name="tableid" type="hidden" id="tableid" value="{{ request.GET.id }}"/>
+                <input name="title" type="hidden" id="title" value="{{ map.title }}"/>
+                <input name="author" type="hidden" value="{{ request.session.username }}"/>
+                <input name="name" type="hidden" value="{{ request.session.name }}"/>
+                <div style="text-align: left">
+                    <button type="submit" class="btn btn-primary">
+                        Post My Comment
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        {% query 'issues' 'select' 'filter' "tableid" request.GET.id as commentList %}
+        <div class="mt10">
+            {% for review in commentList %}
+                {% query 'users' 'find' 'filter' "name" review.author as user %}
+
+                <div class="comment clearfix">
+                    <div class="common-avatar J_User">
+                        {% if user.photo == None or "" == user.photo %}
+                            <img src="/static/images/default.png" width="100%" height="100%"/>
+                        {% else %}
+                            <img src="{{ user.photo }}" width="100%" height="100%"/>
+                        {% endif %}
+                    </div>
+                    <div class="comment-block">
+                        <p class="comment-user">
+                            <span class="comment-username J_User"> {{ review.name }} </span>
+                            <span class="comment-time">{{ review.addtime }}</span>
+                            <span class="comment-time">score：{{ review.score }}</span>
+
+                        </p>
+                        <div class="comment-content J_CommentContent">{{ review.content }}</div>
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+{% include "footer.html" %}
+{% include "foot.html" %}

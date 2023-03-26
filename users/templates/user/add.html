@@ -1,0 +1,105 @@
+{% load utils %} {% include "head.html" %} {% include "header.html" %}
+<script src="/static/js/jquery.validate.js"></script>
+<link href="/static/upload/upload.css" rel="stylesheet"/>
+<script src="/static/upload/upload.js"></script>
+
+<div class="container" style="background-color: #fff">
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <form action="/users/insert/" method="post" name="form1" id="form1">
+
+                <div class="form-group">
+                    <div class="row">
+                        <label style="text-align: right" class="col-sm-2 hiddex-xs">Account name<span
+                                style="color: red">*</span></label>
+                        <div class="col-md-4">
+                            <input
+                                    type="text"
+                                    class="form-control"
+
+                                    data-rule-required="true"
+                                    data-msg-required="Please fill in the user name"
+                                    remote="/common/checkno/?checktype=insert&table=users&col=username"
+                                    data-msg-remote="Repeat the content"
+                                    id="username"
+                                    name="username"
+                                    value=""
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label style="text-align: right" class="col-sm-2 hiddex-xs">Password<span
+                                style="color: red">*</span></label>
+                        <div class="col-md-4">
+                            <input
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Enter the password"
+                                    data-rule-required="true"
+                                    data-msg-required="Please Enter the password"
+                                    id="password"
+                                    name="password"
+                                    value=""
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label style="text-align: right" class="col-sm-2 hiddex-xs">Name<span
+                                style="color: red">*</span></label>
+                        <div class="col-md-4">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="A nick name"
+                                    data-rule-required="true"
+                                    data-msg-required="Please Enter your name"
+                                    id="name"
+                                    name="name"
+                                    value=""
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label style="text-align: right" class="col-sm-2 hiddex-xs">Gender</label>
+                        <div class="col-md-4">
+                            <select class="form-control class_xingbie5" data-value="" id="sex" name="sex"
+                                    >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label style="text-align: right" class="col-sm-2 hiddex-xs"> </label>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary" name="Submit">Submit</button>
+                            <button type="reset" class="btn btn-default" name="Submit2">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        $("#form1").validate();
+    });
+</script>
+
+{% include "footer.html" %} {% include "foot.html" %}

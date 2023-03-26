@@ -1,0 +1,90 @@
+{% load utils %}
+
+
+{% include "head.html" %}
+
+<script src="js/jquery.validate.js"></script>
+
+
+<div class="container" style="max-width:640px">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Change the password:
+        </div>
+        <div class="panel-body">
+            <form action="/common/mod/" method="post" name="form1" id="form1">
+
+                <div class="form-group">
+                    <div class="row">
+                        <label style="text-align: right" class="col-md-4 hiddex-xs ">Original password
+                            <label style="color: red;margin-left: 10px">*</label>
+                        </label>
+                        <div class="col-md-7">
+                            <input type="password" class="form-control" autocomplete="off" placeholder="Password"
+                                   required="true" data-msg-required="Please enter your original password"
+                                   name="oldPwd"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label style="text-align: right" class="col-md-4 hiddex-xs">New Password
+                            <label style="color: red;margin-left: 10px">*</label>
+                        </label>
+                        <div class="col-md-7">
+
+                            <input type="password" class="form-control" autocomplete="off" placeholder="New Password"
+                                   required="true" data-msg-required="Please enter new password." id="xmm"
+                                   name="newPwd"/>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <div class="row">
+
+                        <label style="text-align: right" class="col-md-4 hiddex-xs">Confirm Password
+                            <label style="color: red;margin-left: 10px">*</label>
+                        </label>
+                        <div class="col-md-7">
+
+                            <input type="password" class="form-control" autocomplete="off"
+                                   placeholder="Confirm Password" required="true"
+                                   data-msg-required="Please confirm your password."
+                                   equalto="#xmm" name="newPwd2"/>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="row">
+                        <label class="col-md-4"></label>
+                        <button type="submit" class="btn btn-primary " name="Submit">
+                            Submit
+                        </button>
+                        <button type="reset" class="btn btn-default" name="Submit2">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(function () {
+        $('#form1').validate();
+    });
+</script>
+
+
+{% include "foot.html" %}
+
